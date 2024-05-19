@@ -417,10 +417,7 @@ def build(args, tmpdir):
     try:
         _build(args, tmpdir)
     finally:
-
-        # Ensure we can clean up these directories, that can have weird permissions
-        if args.sudo and (os.path.isdir(os.path.join(tmpdir, "osbuild_store")) or os.path.isdir(os.path.join(tmpdir, "image_output"))):
-            run(args, ["rm", "-rf", tmpdir], use_sudo=True)
+        run(args, ["rm", "-rf", tmpdir], use_sudo=True)
 
 def no_subcommand(args, tmpdir):
     print ("No subcommand specified, see --help for usage")
