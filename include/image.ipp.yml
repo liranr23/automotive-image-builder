@@ -111,6 +111,14 @@ mpp-vars:
               Journal:
                 Storage:
                   mpp-eval: journal_storage
+                SystemMaxUse:
+                  mpp-if: journal_max_use
+                  then:
+                    mpp-eval: journal_max_use
+                SystemMaxFileSize:
+                  mpp-if: journal_max_file_size
+                  then:
+                    mpp-eval: journal_max_file_size
         - type: org.osbuild.containers.storage.conf
           options:
             filename: /etc/containers/storage.conf

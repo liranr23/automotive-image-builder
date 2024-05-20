@@ -88,6 +88,8 @@ mpp-vars:
   default_use_transient_etc: true
   default_coredump_storage: none
   default_journal_storage: persistent
+  default_journal_max_use: ""
+  default_journal_max_file_size: ""
   default_systemd_timeout: 30s
   default_use_static_ip: false
   default_static_ip: "10.0.2.15/24"
@@ -448,6 +450,10 @@ mpp-vars:
     mpp-eval: locals().get('use_transient_etc', default_use_transient_etc)
   journal_storage:
     mpp-eval: locals().get('journal_storage', default_journal_storage)
+  journal_max_use:
+    mpp-eval: locals().get('journal_max_use', default_journal_max_use)
+  journal_max_file_size:
+    mpp-eval: locals().get('journal_max_file_size', default_journal_max_file_size)
   coredump_storage:
     mpp-eval: locals().get('coredump_storage', default_coredump_storage)
   systemd_timeout:
