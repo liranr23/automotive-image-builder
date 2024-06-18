@@ -2,6 +2,7 @@ version: '2'
 mpp-vars:
   use_autoinit: true
   use_debug: true
+  use_transient_etc: false
   extra_build_rpms:
     - qemu-img
   dracut_drivers:
