@@ -370,4 +370,9 @@ mpp-vars:
   resolv_conf:
     mpp-format-string: |
       nameserver {static_dns}
+  ostree_remount_service_hack:
+    mpp-format-string: |
+      [Unit]
+      Before=systemd-sysusers.service
+
 pipelines: []
