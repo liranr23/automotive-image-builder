@@ -12,8 +12,10 @@ mpp-vars:
     - rsync
     - qemu-guest-agent
     - chrony
-  extra_build_rpms:
-    - python3-pyyaml
+  build_rpms:
+    mpp-join:
+      - mpp-eval: build_rpms
+      - - python3-pyyaml
   image_extra_stages:
     mpp-join:
       - mpp-eval: image_extra_stages
