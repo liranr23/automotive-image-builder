@@ -5,7 +5,36 @@ version: '2'
 # things that depend on what was set in that.
 
 mpp-vars:
-  newline: "\n"
+  # If no absolute size is set, compute the relative size
+  varpart_size:
+    mpp-eval: locals().get('varpart_size', int(int(image_size) * varpart_relative_size / 512))
+
+  # Compute dynamic uuids if requested
+  rootfs_uuid:
+    mpp-eval: (rootfs_uuid if static_uuids else str(__import__('uuid').uuid4()))
+  bootfs_uuid:
+    mpp-eval: (bootfs_uuid if static_uuids else str(__import__('uuid').uuid4()))
+  parttab_uuid:
+    mpp-eval: (parttab_uuid if static_uuids else str(__import__('uuid').uuid4()))
+  efipart_uuid:
+    mpp-eval: (efipart_uuid if static_uuids else str(__import__('uuid').uuid4()))
+  bootpart_uuid:
+    mpp-eval: (bootpart_uuid if static_uuids else str(__import__('uuid').uuid4()))
+  varpart_uuid:
+    mpp-eval: (varpart_uuid if static_uuids else str(__import__('uuid').uuid4()))
+  abootpart_uuid_a:
+    mpp-eval: (abootpart_uuid_a if static_uuids else str(__import__('uuid').uuid4()))
+  abootpart_uuid_b:
+    mpp-eval: (abootpart_uuid_b if static_uuids else str(__import__('uuid').uuid4()))
+  vbmetapart_uuid_a:
+    mpp-eval: (vbmetapart_uuid_a if static_uuids else str(__import__('uuid').uuid4()))
+  vbmetapart_uuid_b:
+    mpp-eval: (vbmetapart_uuid_b if static_uuids else str(__import__('uuid').uuid4()))
+  rootpart_uuid:
+    mpp-eval: (rootpart_uuid if static_uuids else str(__import__('uuid').uuid4()))
+  luks_uuid:
+    mpp-eval: (luks_uuid if static_uuids else str(__import__('uuid').uuid4()))
+
   # Backwards compatibility by checking if the deprecated kernel_rpm variable is set
   kernel_core_package:
     mpp-if: locals().get('kernel_rpm')
@@ -104,7 +133,8 @@ mpp-vars:
   base_rpms:
     mpp-join:
       - mpp-eval: base_rpms
-      - - $linux_firmware_rpm
+      - - $release_rpm
+        - $linux_firmware_rpm
         - mpp-if: use_luks
           then: lvm2
         - mpp-if: use_aboot

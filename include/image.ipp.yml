@@ -442,8 +442,6 @@ pipelines:
                 mpp-format-string: input://inlinefile2/{embedded['bluechi_conf']}
               to: tree:///bluechi.conf
 
-  - mpp-import-pipelines:
-      path: mode-$image_mode.ipp.yml
   - name: image
     build: name:build
     stages:
