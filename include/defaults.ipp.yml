@@ -119,7 +119,6 @@ mpp-vars:
   extra_rpms: []
   extra_build_rpms: []
   extra_build_repos: []
-  extra_image_rpms: []
   extra_image_copy: []
   extra_kernel_opts: []
   extra_repos: []
