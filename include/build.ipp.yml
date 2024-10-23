@@ -71,7 +71,7 @@ mpp-define-image:
         - mpp-if: use_testpart
           then:
             mpp-eval: test_partitions
-        - mpp-eval: extra_parts
+        - mpp-eval: extra_partitions
         - - mpp-if: use_separate_var
             then:
               id: var
