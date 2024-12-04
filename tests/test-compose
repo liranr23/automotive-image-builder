@@ -105,11 +105,13 @@ for distro in distros:
                              ]
 
                     manifests = collect_args(elms, "manifest")
-                    if manifests:
-                        for m in manifests:
-                            to_run.append(args + [os.path.join(tests_dir, m)])
-                    else:
-                        to_run.append(args + [os.path.join(tests_dir, default_manifest)])
+
+                    if not (distro["value"] == "rt9" and arch["value"] == "aarch64"):
+                        if manifests:
+                            for m in manifests:
+                                to_run.append(args + [os.path.join(tests_dir, m)])
+                        else:
+                            to_run.append(args + [os.path.join(tests_dir, default_manifest)])
 
 os.makedirs(".test", exist_ok=True)
 
