@@ -123,11 +123,11 @@ On top of the rootfs pipeline, `automotive-image-builder` adds its own standard 
 used during the build. These includes the final pipelines that are used for the export, but also
 intermediate ones as well as the "build" pipeline which is used when building the other pipelines.
 
-Here is an example small manifest file: [example.mpp.yml](example.mpp.yml), you can build and run it it using:
+Here is an example small manifest file: [example.mpp.yml](example.mpp.yml), you can build and run it using:
 
 ```shell
 $ automotive-image-builder build --export qcow2 example.mpp.yml example.qcow2
-$ automotive-image-runnter example.qcow2
+$ automotive-image-runner example.qcow2
 ```
 
 
