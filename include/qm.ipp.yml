@@ -92,7 +92,8 @@ pipelines:
         options:
           path: auto/remove
           product:
-            name: /etc/selinux/{selinux_policy}/contexts/files/*
+            name:
+              mpp-format-string: /etc/selinux/{selinux_policy}/contexts/files/*
 
       - type: org.osbuild.copy
         inputs:
