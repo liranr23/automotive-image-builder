@@ -347,7 +347,7 @@ def make_embed_path_abs(stage, path):
 
 def rewrite_manifest(manifest, path):
     pipelines = manifest.get("pipelines")
-    if len(pipelines) == 0:
+    if not pipelines or len(pipelines) == 0:
         raise exceptions.MissingSection("pipelines")
 
     rootfs = None
