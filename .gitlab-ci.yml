@@ -17,6 +17,7 @@ include:
 stages:
   - pre
   - test
+  - container
   - deploy
   - trigger
 
@@ -130,6 +131,41 @@ pages:
     - generate-schema-doc files/manifest_schema.yml public/simple_manifest.html
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
+
+container-latest:
+  stage: container
+  image: quay.io/buildah/stable:latest
+  parallel:
+    matrix:
+      - ARCH: [amd64, arm64]
+  variables:
+    IMAGE: automotive-image-builder
+  before_script:
+    - buildah login -u "$CONTAINER_REGISTRY_USER" -p "$CONTAINER_REGISTRY_PASSWORD" quay.io
+  script:
+    - buildah bud -f Containerfile -t "$IMAGE:latest-$ARCH" .
+    - buildah push "$IMAGE:latest-$ARCH" "quay.io/centos-sig-automotive/$IMAGE:latest-$ARCH"
+# TEST
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+
+container-latest-manifest:
+  stage: deploy
+  image: quay.io/buildah/stable:latest
+  variables:
+    IMAGE: automotive-image-builder
+    MANIFEST: quay.io/centos-sig-automotive/$IMAGE:latest
+  script:
+    - |
+      buildah login -u "$CONTAINER_REGISTRY_USER" -p "$CONTAINER_REGISTRY_PASSWORD" quay.io
+      buildah manifest create $MANIFEST
+      for ARCH in amd64 arm64; do
+        buildah manifest add $MANIFEST "quay.io/centos-sig-automotive/$IMAGE:latest-$ARCH"
+      done
+      buildah manifest push --all $MANIFEST $MANIFEST
+# TEST
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
 
 trigger-pipeline:
   rules:
