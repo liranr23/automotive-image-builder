@@ -981,6 +981,9 @@ class PartitionTable:
         disk_table = json.loads(r.stdout)["partitiontable"]
         disk_parts = disk_table["partitions"]
 
+        # Disks using MBR partition table can have only up to four primary and extended partitions
+        if self.label == 'dos' and len(self.partitions) > 4:
+            raise ValueError(f"Partition label: '{self.label}' only supports up to 4 partitions (requested {len(self.partitions)})")
         assert len(disk_parts) == len(self.partitions)
         for i, part in enumerate(self.partitions):
             part.partnum = int(re.findall(r'\d+$', disk_parts[i]["node"])[0])
